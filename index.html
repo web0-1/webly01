@@ -9,14 +9,22 @@
     <title>Webly — Sites que vendem de verdade</title>
     <link rel="icon" type="image/png" href="logo.png" />
 
+    <script>
+        (function() {
+            const t = localStorage.getItem('theme');
+            if (t === 'light') {
+                document.documentElement.classList.add('pre-light');
+            } else {
+                document.documentElement.classList.add('pre-dark');
+            }
+        })();
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
     <style>
-        /* ============================================================
-           RESET E VARIÁVEIS — PALETA VERDE WEBLY
-        ============================================================ */
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
@@ -57,9 +65,9 @@
             --hero-glow: radial-gradient(circle at 50% 30%, rgba(34, 197, 94, 0.14), transparent 65%);
         }
 
-        /* ============================================================
-           BASE
-        ============================================================ */
+        html.pre-dark body { background: #0a1410 !important; }
+        html.pre-light body { background: #ffffff !important; }
+
         html { scroll-behavior: smooth; }
 
         body {
@@ -75,9 +83,6 @@
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
 
-        /* ============================================================
-           ANIMAÇÕES
-        ============================================================ */
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(30px); }
             to   { opacity: 1; transform: translateY(0); }
@@ -126,9 +131,6 @@
         .hero-title-word:nth-child(5) { animation-delay: 0.58s; }
         .hero-title-word:nth-child(6) { animation-delay: 0.70s; }
 
-        /* ============================================================
-           TIPOGRAFIA
-        ============================================================ */
         h1, h2, h3, h4 {
             font-family: 'Outfit', sans-serif;
             font-weight: 800;
@@ -153,9 +155,6 @@
             border-radius: 5px;
         }
 
-        /* ============================================================
-           BOTÕES
-        ============================================================ */
         .btn {
             display: inline-block;
             padding: 15px 40px;
@@ -191,9 +190,6 @@
             transform: translateY(-3px);
         }
 
-        /* ============================================================
-           HEADER
-        ============================================================ */
         header {
             position: fixed;
             top: 0; left: 0;
@@ -218,7 +214,6 @@
             gap: 14px;
         }
 
-        /* ===== LOGO (imagem) ===== */
         .logo {
             display: inline-flex;
             align-items: center;
@@ -255,9 +250,6 @@
         .nav-links a:hover::after { width: 100%; }
         .nav-links a:hover { color: var(--accent); }
 
-        /* ============================================================
-           HERO
-        ============================================================ */
         .hero {
             padding: 220px 0 120px;
             text-align: center;
@@ -326,9 +318,6 @@
             flex-wrap: wrap;
         }
 
-        /* ============================================================
-           BENEFÍCIOS
-        ============================================================ */
         .benefits { padding: 100px 0; background: var(--bg-secondary); }
         .benefits-grid {
             display: grid;
@@ -383,9 +372,6 @@
             font-size: 0.98rem;
         }
 
-        /* ============================================================
-           GRÁFICO
-        ============================================================ */
         .graphics { padding: 100px 0; background: var(--bg-primary); }
         .chart-container {
             background: var(--bg-card);
@@ -442,9 +428,6 @@
         }
         body.dark-mode .chart-footer { color: var(--accent-light); }
 
-        /* ============================================================
-           PORTFÓLIO
-        ============================================================ */
         .portfolio { padding: 100px 0; background: var(--bg-secondary); }
         .portfolio-grid {
             display: grid;
@@ -492,9 +475,6 @@
             margin-top: 4px;
         }
 
-        /* ============================================================
-           DEPOIMENTOS
-        ============================================================ */
         .testimonials { padding: 100px 0; background: var(--bg-primary); }
         .testimonial-grid {
             display: grid;
@@ -564,9 +544,6 @@
             line-height: 1;
         }
 
-        /* ============================================================
-           PREÇO
-        ============================================================ */
         .pricing { padding: 100px 0 90px; background: var(--bg-secondary); }
         .price-box {
             max-width: 540px;
@@ -626,7 +603,7 @@
             list-style: none;
             margin: 28px 0;
             text-align: left;
-            max-width: 280px;
+            max-width: 320px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -634,14 +611,16 @@
             margin: 12px 0;
             color: var(--text-secondary);
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 12px;
+            line-height: 1.4;
         }
         .price-box ul li::before {
             content: '✓';
             color: var(--accent);
             font-weight: 900;
             font-size: 1.15rem;
+            flex-shrink: 0;
         }
         .price-box .btn { width: 100%; margin-top: 12px; }
         .price-box .footnote {
@@ -650,9 +629,6 @@
             color: var(--text-muted);
         }
 
-        /* ============================================================
-           CONTATO
-        ============================================================ */
         .contact-section { padding: 100px 0; background: var(--bg-primary); }
         .contact-cards {
             display: flex;
@@ -695,9 +671,6 @@
             font-size: 0.92rem;
         }
 
-        /* ============================================================
-           FOOTER
-        ============================================================ */
         footer {
             background: var(--footer-bg);
             text-align: center;
@@ -734,9 +707,6 @@
         }
         .social-icons svg { width: 22px; height: 22px; fill: currentColor; }
 
-        /* ============================================================
-           BOTÕES FLUTUANTES
-        ============================================================ */
         .float-buttons {
             position: fixed;
             bottom: 26px;
@@ -780,18 +750,12 @@
             color: var(--accent);
         }
 
-        /* ============================================================
-           RESPONSIVO — TABLET
-        ============================================================ */
         @media (max-width: 992px) {
             .benefits-grid,
             .testimonial-grid { grid-template-columns: repeat(2, 1fr); }
             .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
-        /* ============================================================
-           RESPONSIVO — CELULAR (3 COLUNAS)
-        ============================================================ */
         @media (max-width: 768px) {
             .hero { padding: 240px 0 80px; }
             .hero h1 { font-size: 2.4rem; }
@@ -806,7 +770,6 @@
             header.scrolled .logo img { height: 60px; }
             .nav-links a { margin: 0 12px; font-size: 0.82rem; }
 
-            /* 3 COLUNAS EM TUDO */
             .benefits-grid,
             .testimonial-grid,
             .portfolio-grid {
@@ -814,7 +777,6 @@
                 gap: 8px;
             }
 
-            /* Benefícios compactos */
             .benefit-card { padding: 16px 8px; border-radius: 12px; }
             .benefit-icon {
                 width: 34px; height: 34px;
@@ -825,24 +787,22 @@
             .benefit-card h3 { font-size: 0.76rem; margin-bottom: 4px; line-height: 1.15; }
             .benefit-card p  { font-size: 0.6rem; line-height: 1.35; }
 
-            /* Depoimentos compactos */
             .testimonial-card { padding: 18px 8px 14px; border-radius: 12px; }
             .testimonial-card::before { font-size: 2.2rem; top: -6px; left: 4px; }
             .testimonial-text { font-size: 0.62rem; line-height: 1.4; margin-bottom: 8px; }
             .client-name { font-size: 0.6rem; line-height: 1.3; }
 
-            /* Portfólio compacto */
             .portfolio-card { border-radius: 12px; }
             .portfolio-info { padding: 10px 8px; }
             .portfolio-info h4 { font-size: 0.7rem; line-height: 1.15; }
             .portfolio-info p  { font-size: 0.58rem; line-height: 1.3; margin-top: 2px; }
 
-            /* Seções mais enxutas */
             .benefits, .graphics, .portfolio,
             .testimonials, .pricing, .contact-section { padding: 70px 0; }
 
             .price-value { font-size: 2.4rem; }
             .price-box { padding: 40px 22px; border-radius: 18px; }
+            .price-box ul { max-width: 100%; }
             .price-box ul li { font-size: 0.85rem; }
 
             .chart-container { padding: 20px 12px; border-radius: 16px; }
@@ -862,9 +822,6 @@
             .hero::before { width: 320px; height: 320px; }
         }
 
-        /* ============================================================
-           RESPONSIVO — CELULAR PEQUENO (ainda 3 colunas)
-        ============================================================ */
         @media (max-width: 480px) {
             .hero { padding: 220px 0 60px; }
             .hero h1 { font-size: 1.9rem; }
@@ -908,9 +865,8 @@
         }
     </style>
 </head>
-<body>
+<body class="dark-mode">
 
-    <!-- ===== HEADER ===== -->
     <header>
         <div class="container header-flex">
             <a href="#" class="logo" aria-label="Webly.site">
@@ -924,7 +880,6 @@
         </div>
     </header>
 
-    <!-- ===== HERO ===== -->
     <section class="hero">
         <div class="container">
             <div class="hero-badge">
@@ -947,7 +902,6 @@
         </div>
     </section>
 
-    <!-- ===== BENEFÍCIOS ===== -->
     <section id="benefits" class="benefits">
         <div class="container">
             <h2 class="section-title fade-up">Por que <span>Webly</span>?</h2>
@@ -971,7 +925,6 @@
         </div>
     </section>
 
-    <!-- ===== GRÁFICO ===== -->
     <section class="graphics">
         <div class="container">
             <h2 class="section-title fade-up">Crescimento real com um site <span>profissional</span></h2>
@@ -1006,14 +959,13 @@
         </div>
     </section>
 
-    <!-- ===== PORTFÓLIO ===== -->
     <section id="portfolio" class="portfolio">
         <div class="container">
             <h2 class="section-title fade-up">Nossos <span>trabalhos</span> recentes</h2>
             <div class="portfolio-grid">
                 <div class="portfolio-card fade-up">
                     <div class="portfolio-image">
-                        <img src="p1.png" alt="Projeto 1" loading="lazy" />
+                        <img src="p1.png" alt="E-commerce Moderno" loading="lazy" />
                     </div>
                     <div class="portfolio-info">
                         <h4>E-commerce Moderno</h4>
@@ -1022,7 +974,7 @@
                 </div>
                 <div class="portfolio-card fade-up">
                     <div class="portfolio-image">
-                        <img src="p2.png" alt="Projeto 2" loading="lazy" />
+                        <img src="p2.png" alt="Site Corporativo" loading="lazy" />
                     </div>
                     <div class="portfolio-info">
                         <h4>Site Corporativo</h4>
@@ -1031,7 +983,7 @@
                 </div>
                 <div class="portfolio-card fade-up">
                     <div class="portfolio-image">
-                        <img src="p3.png" alt="Projeto 3" loading="lazy" />
+                        <img src="p3.png" alt="Landing Page" loading="lazy" />
                     </div>
                     <div class="portfolio-info">
                         <h4>Landing Page</h4>
@@ -1042,7 +994,6 @@
         </div>
     </section>
 
-    <!-- ===== DEPOIMENTOS ===== -->
     <section class="testimonials">
         <div class="container">
             <h2 class="section-title fade-up">Quem já usou a Webly <span>vendeu mais</span></h2>
@@ -1069,17 +1020,18 @@
         </div>
     </section>
 
-    <!-- ===== PREÇO ===== -->
     <section class="pricing">
         <div class="container">
             <div class="price-box fade-up">
                 <h3>Oferta especial</h3>
-                <div class="price-value">R$320 <small>3x sem juros</small></div>
+                <div class="price-value">R$320 <small>criação • 3x sem juros</small></div>
                 <ul>
                     <li>Site profissional completo</li>
                     <li>Feito em até 48hrs</li>
-                    <li>Otimizado para celular/pc</li>
-                    <li>Suporte por 3 meses</li>
+                    <li>Otimizado para celular e pc</li>
+                    <li>Aparece nas pesquisas do Google</li>
+                    <li>Domínio grátis no 1º ano</li>
+                    <li>Após o 1º ano, apenas R$40/ano</li>
                 </ul>
                 <a href="https://wa.me/5521981478571?text=Olá!%20Gostaria%20de%20um%20orçamento%20para%20criar%20meu%20site." target="_blank" class="btn btn-primary">Garantir minha vaga</a>
                 <p class="footnote">* Vagas limitadas por mês</p>
@@ -1087,7 +1039,6 @@
         </div>
     </section>
 
-    <!-- ===== CONTATO ===== -->
     <section id="contato" class="contact-section">
         <div class="container">
             <h2 class="section-title fade-up">Entre em <span>contato</span></h2>
@@ -1110,7 +1061,6 @@
         </div>
     </section>
 
-    <!-- ===== FOOTER ===== -->
     <footer>
         <div class="container">
             <a href="#" class="logo-footer">
@@ -1128,18 +1078,16 @@
         </div>
     </footer>
 
-    <!-- ===== BOTÕES FLUTUANTES ===== -->
     <div class="float-buttons">
         <a href="https://wa.me/5521981478571?text=Olá!%20Gostaria%20de%20um%20orçamento%20para%20criar%20meu%20site." target="_blank" class="whatsapp-float" aria-label="WhatsApp">
             <svg viewBox="0 0 24 24"><path d="M12.032 2.018c-5.524 0-10 4.476-10 10 0 1.752.456 3.478 1.315 5.002L2 22l5.044-1.321c1.482.813 3.174 1.24 4.908 1.24 5.524 0 10-4.476 10-10s-4.476-10-10-10zm0 18.394c-1.513 0-3.008-.397-4.306-1.148l-.309-.183-2.994.784.799-2.916-.2-.323c-.85-1.39-1.298-2.99-1.298-4.634 0-4.827 3.928-8.755 8.756-8.755 4.828 0 8.756 3.928 8.756 8.756s-3.928 8.756-8.756 8.756zm4.8-6.559c-.264-.132-1.562-.771-1.804-.859-.242-.088-.418-.132-.594.132-.176.264-.682.859-.836 1.035-.154.176-.308.198-.572.066-.264-.132-1.115-.411-2.124-1.31-.785-.7-1.315-1.564-1.47-1.828-.154-.264-.016-.407.116-.538.118-.119.264-.308.396-.462.132-.154.176-.264.264-.44.088-.176.044-.33-.022-.462-.066-.132-.594-1.431-.814-1.96-.214-.514-.432-.445-.594-.454-.154-.009-.33-.011-.506-.011-.176 0-.462.066-.704.33-.242.264-.924.903-.924 2.203 0 1.3.946 2.556 1.078 2.732.132.176 1.862 2.844 4.512 3.988.63.272 1.122.435 1.507.557.633.2 1.209.171 1.664.104.508-.075 1.562-.639 1.782-1.256.22-.617.22-1.146.154-1.256-.066-.11-.242-.176-.506-.308z"/></svg>
         </a>
         <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
-            <svg id="themeIcon" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg>
+            <svg id="themeIcon" viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/></svg>
         </button>
     </div>
 
     <script>
-        // ===== TEMA =====
         const themeToggle = document.getElementById('themeToggle');
         const themeIcon = document.getElementById('themeIcon');
 
@@ -1147,11 +1095,12 @@
         const moonIcon = `<path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/>`;
 
         const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
+        if (savedTheme === 'light') {
+            document.body.classList.remove('dark-mode');
+            themeIcon.innerHTML = moonIcon;
+        } else {
             document.body.classList.add('dark-mode');
             themeIcon.innerHTML = sunIcon;
-        } else {
-            themeIcon.innerHTML = moonIcon;
         }
 
         themeToggle.addEventListener('click', () => {
@@ -1161,7 +1110,6 @@
             themeIcon.innerHTML = isDark ? sunIcon : moonIcon;
         });
 
-        // ===== SCROLL REVEAL =====
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -1172,13 +1120,11 @@
         }, { threshold: 0.15 });
         document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-        // ===== HEADER SCROLL =====
         const header = document.querySelector('header');
         window.addEventListener('scroll', () => {
             header.classList.toggle('scrolled', window.scrollY > 40);
         });
 
-        // ===== GRÁFICO =====
         const chartObs = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -1191,7 +1137,6 @@
         const chartContainer = document.querySelector('.chart-container');
         if (chartContainer) chartObs.observe(chartContainer);
 
-        // ===== CONTADOR =====
         function animateCounter(el, end, duration) {
             let startTime = null;
             function step(ts) {
