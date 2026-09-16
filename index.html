@@ -891,6 +891,10 @@ html[data-theme="light"] .chart-footer { color: var(--accent-d); }
   border-color: rgba(34, 197, 94, .4);
   box-shadow: var(--shadow-h);
 }
+.portfolio-card:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
 .portfolio-image {
   position: relative;
   aspect-ratio: 4 / 3;
@@ -1756,14 +1760,19 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
     </div>
 
     <div class="portfolio-grid">
-      <article class="portfolio-card reveal">
+         <!-- CARD 1 — abre o link ao clicar -->
+      <article class="portfolio-card reveal"
+               onclick="window.open('https://web0-1.github.io/Site-intermediario/#','_blank','noopener')"
+               onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.open('https://web0-1.github.io/Site-intermediario/#','_blank','noopener');}"
+               role="link" tabindex="0"
+               aria-label="Abrir projeto Clínica">
         <div class="portfolio-image">
-          <img src="p1.png" alt="E-commerce moderno criado pela Webly" loading="lazy" />
+          <img src="p1.png" alt="Site para clínica criado pela Webly" loading="lazy" />
           <div class="portfolio-overlay"><span>Ver projeto</span></div>
         </div>
         <div class="portfolio-info">
-          <h4>E-commerce Moderno</h4>
-          <p>Loja virtual com alta taxa de conversão.</p>
+          <h4>Clínica</h4>
+          <p>Site para alta conversão de clientes.</p>
         </div>
       </article>
 
