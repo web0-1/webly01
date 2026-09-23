@@ -838,6 +838,20 @@ html[data-theme="light"] .hero-badge { color: var(--accent-d); }
   font-weight: 500;
 }
 
+/* Barrinhas verticais subindo junto com a linha */
+.chart-bar {
+  fill: url(#barGrad);
+  opacity: 0;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transform-box: fill-box;
+  transition: transform 1s cubic-bezier(.23, 1, .32, 1), opacity .5s ease;
+}
+.chart-bar.show {
+  opacity: .55;
+  transform: scaleY(1);
+}
+
 .dot-pt {
   fill: var(--accent);
   stroke: var(--card);
@@ -856,6 +870,58 @@ html[data-theme="light"] .hero-badge { color: var(--accent-d); }
   60%  { transform: scale(1.25); }
   100% { transform: scale(1); }
 }
+
+/* Linha de comparação (sem site) */
+.compare-line {
+  stroke: var(--muted);
+  stroke-width: 3;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 8 8;
+  opacity: 0;
+  transition: opacity .8s ease;
+}
+.line-chart.drawn .compare-line { opacity: .6; }
+
+.compare-pt {
+  fill: var(--muted);
+  stroke: var(--card);
+  stroke-width: 2;
+  opacity: 0;
+  transition: opacity .3s ease;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+.compare-pt.show {
+  opacity: .85;
+  animation: popIn .5s cubic-bezier(.23, 1, .32, 1) both;
+}
+
+/* Legenda do gráfico */
+.chart-legend {
+  display: flex;
+  justify-content: center;
+  gap: 22px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+  font-size: .82rem;
+  color: var(--text-2);
+  font-weight: 500;
+}
+.chart-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.legend-dot {
+  width: 22px;
+  height: 3px;
+  border-radius: 3px;
+  display: inline-block;
+}
+.legend-green { background: var(--accent); }
+.legend-muted { background: var(--muted); opacity: .7; }
 
 .chart-footer {
   text-align: center;
@@ -1453,6 +1519,12 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
 
   .chart-container { padding: 16px 10px; border-radius: 13px; }
   .chart-title { font-size: .74rem; margin-bottom: 12px; }
+  .chart-legend {
+    gap: 10px;
+    margin-bottom: 12px;
+    font-size: .55rem;
+  }
+  .legend-dot { width: 14px; height: 2px; }
   .chart-footer { font-size: .64rem; margin-top: 14px; }
 
   .visitor-counter { padding: 18px 12px; margin-top: 24px; border-radius: 13px; }
@@ -1524,11 +1596,6 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
   .stat-num { font-size: .95rem; }
   .stat-label { font-size: .5rem; }
 }
-
-/* ============================================================
-   ANIMAÇÕES FORÇADAS — REMOVIDO prefers-reduced-motion
-   (agora todo mundo vê as animações)
-   ============================================================ */
 </style>
 </head>
 
@@ -1705,12 +1772,21 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
     <div class="chart-container reveal" id="lineChart">
       <div class="chart-title">Aumento de vendas após o site da Webly</div>
 
+      <div class="chart-legend">
+        <span><i class="legend-dot legend-green"></i> Com site Webly</span>
+        <span><i class="legend-dot legend-muted"></i> Sem site profissional</span>
+      </div>
+
       <div class="line-chart">
         <svg viewBox="0 0 700 300" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Gráfico de crescimento de vendas em 5 meses">
           <defs>
             <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stop-color="#22c55e" stop-opacity=".3" />
               <stop offset="100%" stop-color="#22c55e" stop-opacity="0" />
+            </linearGradient>
+            <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#22c55e" stop-opacity=".55" />
+              <stop offset="100%" stop-color="#22c55e" stop-opacity=".08" />
             </linearGradient>
           </defs>
 
@@ -1723,8 +1799,28 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
           <line class="chart-axis" x1="50" y1="250" x2="50"  y2="30"  />
 
           <polygon class="chart-area" points="50,250 180,220 310,180 440,120 570,60 570,250" />
+
+          <!-- Barrinhas verticais subindo junto com a linha -->
+          <rect class="chart-bar" x="32"  y="246" width="36" height="4"   rx="6" />
+          <rect class="chart-bar" x="162" y="220" width="36" height="30"  rx="6" />
+          <rect class="chart-bar" x="292" y="180" width="36" height="70"  rx="6" />
+          <rect class="chart-bar" x="422" y="120" width="36" height="130" rx="6" />
+          <rect class="chart-bar" x="552" y="60"  width="36" height="190" rx="6" />
+
+          <!-- Linha de comparação (sem site) -->
+          <polyline class="compare-line" points="50,250 180,246 310,242 440,239 570,236" />
+
+          <!-- Linha de crescimento (com site Webly) -->
           <polyline class="growth-line" points="50,250 180,220 310,180 440,120 570,60" />
 
+          <!-- Pontos da linha "sem site" -->
+          <circle class="compare-pt" cx="50"  cy="250" r="4" />
+          <circle class="compare-pt" cx="180" cy="246" r="4" />
+          <circle class="compare-pt" cx="310" cy="242" r="4" />
+          <circle class="compare-pt" cx="440" cy="239" r="4" />
+          <circle class="compare-pt" cx="570" cy="236" r="4" />
+
+          <!-- Pontos da linha "com site" -->
           <circle class="dot-pt" cx="50"  cy="250" r="6" />
           <circle class="dot-pt" cx="180" cy="220" r="6" />
           <circle class="dot-pt" cx="310" cy="180" r="6" />
@@ -1760,7 +1856,7 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
     </div>
 
     <div class="portfolio-grid">
-         <!-- CARD 1 — abre o link ao clicar -->
+      <!-- CARD 1 — Clínica -->
       <article class="portfolio-card reveal"
                onclick="window.open('https://web0-1.github.io/Site-intermediario/#','_blank','noopener')"
                onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.open('https://web0-1.github.io/Site-intermediario/#','_blank','noopener');}"
@@ -1776,17 +1872,23 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
         </div>
       </article>
 
-      <article class="portfolio-card reveal">
+      <!-- CARD 2 — Escolinha de Surf -->
+      <article class="portfolio-card reveal"
+               onclick="window.open('https://web0-1.github.io/escola-surf/','_blank','noopener')"
+               onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.open('https://web0-1.github.io/escola-surf/','_blank','noopener');}"
+               role="link" tabindex="0"
+               aria-label="Abrir projeto Escolinha de Surf">
         <div class="portfolio-image">
-          <img src="p2.png" alt="Site corporativo criado pela Webly" loading="lazy" />
+          <img src="p2.png" alt="Site para escolinha de surf criado pela Webly" loading="lazy" />
           <div class="portfolio-overlay"><span>Ver projeto</span></div>
         </div>
         <div class="portfolio-info">
-          <h4>Site Corporativo</h4>
-          <p>Presença digital forte para empresas.</p>
+          <h4>Escolinha de Surf</h4>
+          <p>Site para escola de surf com foco em conversão.</p>
         </div>
       </article>
 
+      <!-- CARD 3 — Landing Page -->
       <article class="portfolio-card reveal">
         <div class="portfolio-image">
           <img src="p3.png" alt="Landing page criada pela Webly" loading="lazy" />
@@ -1969,7 +2071,6 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
   var $  = function (s, c) { return (c || document).querySelector(s); };
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
 
-  /* ANIMAÇÕES SEMPRE ATIVAS — ignora prefers-reduced-motion */
   var reduceMotion = false;
 
   /* ---------- Preloader ---------- */
@@ -2078,7 +2179,7 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
     if (e.key === 'Escape') closeMenu();
   });
 
-  /* ---------- Reveal on scroll (SEMPRE anima) ---------- */
+  /* ---------- Reveal on scroll ---------- */
   var revealEls = $$('.reveal');
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (entries, obs) {
@@ -2094,7 +2195,7 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
     revealEls.forEach(function (el) { el.classList.add('visible'); });
   }
 
-  /* ---------- Contadores (SEMPRE anima) ---------- */
+  /* ---------- Contadores ---------- */
   function animateCount(el, end, duration, prefix, suffix) {
     var startTime = null;
     function step(ts) {
@@ -2128,15 +2229,23 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
     });
   }
 
-  /* ---------- Gráfico (SEMPRE anima) ---------- */
+  /* ---------- Gráfico ---------- */
   var lineChart = $('#lineChart');
   if (lineChart) {
-    var dots = $$('.dot-pt', lineChart);
+    var dots = $$('.dot-pt, .compare-pt', lineChart);
+    var bars = $$('.chart-bar', lineChart);
 
     function drawChart() {
       lineChart.classList.add('drawn');
+
+      /* Barrinhas crescem de baixo pra cima, sincronizadas com a linha */
+      bars.forEach(function (b, i) {
+        setTimeout(function () { b.classList.add('show'); }, 200 + i * 380);
+      });
+
+      /* Pontinhos aparecem logo depois de cada barrinha */
       dots.forEach(function (d, i) {
-        setTimeout(function () { d.classList.add('show'); }, 400 + i * 300);
+        setTimeout(function () { d.classList.add('show'); }, 500 + i * 200);
       });
     }
 
