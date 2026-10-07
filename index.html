@@ -1456,224 +1456,263 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
 /* ============================================================
    RESPONSIVO
    ============================================================ */
+
+/* ---------- Tablet (até 992px) ---------- */
 @media (max-width: 992px) {
   .benefits-grid,
   .testimonial-grid,
-  .portfolio-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; }
-  .benefit-card,
-  .testimonial-card { padding: 26px 18px; }
-  .benefit-card h3 { font-size: 1.1rem; }
-  .testimonial-card::before { font-size: 4rem; }
+  .portfolio-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+  .contact-card { width: calc(50% - 11px); }
+  .contact-cards { gap: 22px; }
 }
 
-@media (max-width: 820px) {
-  .container { padding: 0 14px; }
+/* ---------- Mobile (até 700px) ---------- */
+@media (max-width: 700px) {
+  .container { padding: 0 20px; }
 
+  /* Nav */
   .nav-desktop { display: none; }
   .burger { display: flex; }
+  .logo-img { height: 46px; }
+  #header.scrolled .logo-img { height: 38px; }
 
-  .logo-img { height: 42px; }
-  #header.scrolled .logo-img { height: 34px; }
-
-  .hero { padding: 110px 0 60px; }
-  .hero::before { width: min(420px, 80vw); height: min(420px, 80vw); }
+  /* Hero */
+  .hero { padding: 120px 0 60px; }
+  .hero::before { width: min(400px, 90vw); height: min(400px, 90vw); }
   .orb { display: none; }
+
   .hero-badge {
-    font-size: .62rem;
-    padding: 5px 12px;
-    margin-bottom: 18px;
-    letter-spacing: .06em;
+    font-size: .72rem;
+    padding: 7px 15px;
+    margin-bottom: 20px;
+    letter-spacing: .07em;
   }
   .hero h1 {
-    font-size: clamp(1.55rem, 6.5vw, 2.2rem);
+    font-size: clamp(1.9rem, 8.5vw, 2.8rem);
     margin-bottom: 18px;
+    line-height: 1.1;
   }
   .hero p {
-    font-size: .85rem;
-    margin-bottom: 26px;
-    line-height: 1.55;
+    font-size: 1rem;
+    margin-bottom: 30px;
+    line-height: 1.6;
+    padding: 0 4px;
   }
-  .hero-buttons { gap: 8px; }
+  .hero-buttons {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+    padding: 0 4px;
+  }
   .hero-buttons .btn {
-    padding: 11px 20px;
-    font-size: .82rem;
-    border-radius: 11px;
+    width: 100%;
+    padding: 15px 24px;
+    font-size: .95rem;
+    border-radius: 12px;
   }
+
   .hero-stats {
     grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
-    max-width: 100%;
-    margin-top: 34px;
+    gap: 8px;
+    margin-top: 40px;
   }
-  .stat {
-    padding: 12px 8px;
-    border-radius: 11px;
-  }
-  .stat-num { font-size: 1.05rem; }
-  .stat-label { font-size: .56rem; margin-top: 3px; line-height: 1.2; }
+  .stat { padding: 16px 8px; border-radius: 14px; }
+  .stat-num { font-size: 1.4rem; }
+  .stat-label { font-size: .72rem; margin-top: 6px; line-height: 1.25; }
 
-  .marquee { padding: 12px 0; }
+  /* Marquee */
+  .marquee { padding: 16px 0; }
   .marquee-track span {
-    font-size: .62rem;
+    font-size: .75rem;
     letter-spacing: .1em;
-    padding: 0 12px;
-    gap: 12px;
+    padding: 0 16px;
+    gap: 16px;
   }
-  .marquee-track span::after { width: 4px; height: 4px; }
+  .marquee-track span::after { width: 5px; height: 5px; }
 
+  /* Espaçamento geral das seções */
   .benefits, .graphics, .portfolio,
-  .testimonials, .cta-final, .contact { padding: 46px 0; }
+  .testimonials, .cta-final, .contact { padding: 70px 0; }
 
-  .section-head { margin-bottom: 28px; }
-  .section-title { font-size: 1.25rem; margin-bottom: 10px; }
-  .section-sub { font-size: .74rem; line-height: 1.5; padding: 0 4px; }
-  .title-rule { width: 40px; height: 3px; margin-top: 12px; }
+  .section-head { margin-bottom: 36px; }
+  .section-title {
+    font-size: clamp(1.55rem, 6.5vw, 2rem);
+    margin-bottom: 12px;
+  }
+  .section-sub { font-size: .95rem; line-height: 1.55; }
+  .title-rule { width: 48px; height: 4px; margin-top: 14px; }
 
+  /* Grids viram 1 coluna */
   .benefits-grid,
   .testimonial-grid,
   .portfolio-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 
-  .reveal.reveal-left  { transform: translateX(-60px); }
-  .reveal.reveal-right { transform: translateX(60px); }
+  /* Reveal só desliza pra cima no mobile */
+  .reveal.reveal-left,
+  .reveal.reveal-right { transform: translateY(40px); }
 
-  .benefit-card { padding: 14px 8px; border-radius: 11px; }
-  .benefit-card::before { height: 2px; }
+  /* Benefícios */
+  .benefit-card {
+    padding: 28px 24px;
+    border-radius: 18px;
+  }
   .benefit-icon {
-    width: 30px;
-    height: 30px;
-    font-size: .9rem;
-    border-radius: 8px;
-    margin-bottom: 7px;
+    width: 52px;
+    height: 52px;
+    font-size: 1.5rem;
+    border-radius: 14px;
+    margin-bottom: 16px;
   }
   .benefit-card h3 {
-    font-size: .64rem;
-    line-height: 1.15;
-    margin-bottom: 3px;
-    letter-spacing: -.01em;
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    letter-spacing: -.02em;
   }
-  .benefit-card p { font-size: .5rem; line-height: 1.35; }
+  .benefit-card p { font-size: .92rem; line-height: 1.65; }
 
-  .testimonial-card { padding: 14px 7px 12px; border-radius: 11px; }
-  .testimonial-card::before { font-size: 1.7rem; left: 5px; top: -1px; }
-  .stars { font-size: .5rem; letter-spacing: .5px; margin-bottom: 5px; }
-  .testimonial-text { font-size: .5rem; line-height: 1.4; margin-bottom: 8px; }
-  .client { gap: 4px; }
-  .avatar { width: 18px; height: 18px; font-size: .48rem; }
-  .client-name { font-size: .52rem; }
-  .client-role { font-size: .44rem; }
-
-  .portfolio-card { border-radius: 11px; }
-  .portfolio-image { aspect-ratio: 1 / 1; }
-  .portfolio-info { padding: 8px 7px 10px; }
-  .portfolio-info h4 { font-size: .6rem; line-height: 1.15; margin-bottom: 2px; }
-  .portfolio-info p { font-size: .46rem; line-height: 1.3; }
+  /* Portfólio */
+  .portfolio-card { border-radius: 18px; }
+  .portfolio-image { aspect-ratio: 4 / 3; }
+  .portfolio-info { padding: 20px 22px 24px; }
+  .portfolio-info h4 { font-size: 1.15rem; margin-bottom: 4px; }
+  .portfolio-info p { font-size: .9rem; }
   .portfolio-overlay span {
-    font-size: .44rem;
-    padding: 3px 7px;
-    letter-spacing: .04em;
-    border-width: 1px;
+    font-size: .72rem;
+    padding: 8px 18px;
+    letter-spacing: .1em;
+    border-width: 1.5px;
   }
 
-  .chart-container { padding: 16px 10px; border-radius: 13px; }
-  .chart-title { font-size: .74rem; margin-bottom: 12px; }
+  /* Depoimentos */
+  .testimonial-card {
+    padding: 28px 24px;
+    border-radius: 18px;
+  }
+  .testimonial-card::before { font-size: 4rem; left: 16px; top: -4px; }
+  .stars { font-size: .9rem; margin-bottom: 12px; letter-spacing: 2px; }
+  .testimonial-text {
+    font-size: .95rem;
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+  .avatar { width: 40px; height: 40px; font-size: .9rem; }
+  .client { gap: 12px; }
+  .client-name { font-size: .9rem; }
+  .client-role { font-size: .78rem; }
+
+  /* Gráfico */
+  .chart-container {
+    padding: 26px 18px;
+    border-radius: 18px;
+  }
+  .chart-title {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    padding: 0 10px;
+    line-height: 1.35;
+  }
   .chart-legend {
-    gap: 10px;
-    margin-bottom: 12px;
-    font-size: .55rem;
+    gap: 14px;
+    margin-bottom: 16px;
+    font-size: .78rem;
   }
-  .legend-dot { width: 14px; height: 2px; }
-  .chart-footer { font-size: .64rem; margin-top: 14px; }
+  .legend-dot { width: 18px; height: 3px; }
+  .chart-footer { font-size: .85rem; margin-top: 20px; padding: 0 10px; }
 
-  .visitor-counter { padding: 18px 12px; margin-top: 24px; border-radius: 13px; }
-  .visitor-counter p { font-size: .68rem; line-height: 1.4; }
-  .counter-number { font-size: 1.9rem; }
-
-  /* CTA final — mobile */
-  .cta-box {
-    padding: 42px 22px;
-    border-radius: 20px;
+  /* Contador */
+  .visitor-counter {
+    padding: 30px 22px;
+    margin-top: 36px;
+    border-radius: 18px;
   }
-  .cta-emoji { font-size: 2.2rem; margin-bottom: 8px; }
+  .visitor-counter p { font-size: .92rem; }
+  .counter-number { font-size: 3rem; margin: 8px 0; }
+
+  /* CTA final */
+  .cta-box { padding: 50px 26px; border-radius: 22px; }
+  .cta-emoji { font-size: 2.6rem; margin-bottom: 10px; }
   .cta-box h2 {
-    font-size: 1.7rem;
-    margin-bottom: 12px;
+    font-size: clamp(1.8rem, 8vw, 2.4rem);
+    margin-bottom: 14px;
+    line-height: 1.1;
   }
-  .cta-box h2 span::after { height: 4px; bottom: -4px; }
+  .cta-box h2 span::after { height: 5px; bottom: -5px; }
   .cta-box p {
-    font-size: .85rem;
-    margin-bottom: 24px;
-    line-height: 1.55;
+    font-size: .98rem;
+    margin-bottom: 28px;
+    line-height: 1.6;
+    padding: 0 4px;
   }
   .btn-cta {
-    padding: 14px 30px;
-    font-size: .92rem;
-    border-radius: 12px;
+    width: 100%;
+    padding: 16px 32px;
+    font-size: 1rem;
+    border-radius: 14px;
   }
-  .btn-cta svg { width: 14px; height: 14px; }
   .cta-trust {
-    gap: 12px;
-    margin-top: 20px;
-    font-size: .62rem;
+    gap: 14px;
+    margin-top: 22px;
+    font-size: .78rem;
   }
-  .cta-trust span::before {
-    width: 14px; height: 14px;
-    font-size: .55rem;
-  }
+  .cta-trust span::before { width: 16px; height: 16px; font-size: .65rem; }
 
+  /* Contato */
   .contact-cards {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
-    justify-content: stretch;
+    grid-template-columns: 1fr;
+    gap: 14px;
   }
-  .contact-card { width: 100%; padding: 14px 6px; border-radius: 11px; }
-  .contact-icon { width: 30px; height: 30px; border-radius: 8px; margin-bottom: 7px; }
-  .contact-icon svg { width: 15px; height: 15px; }
-  .contact-card h3 { font-size: .62rem; margin-bottom: 2px; line-height: 1.15; }
-  .contact-card p { font-size: .48rem; line-height: 1.3; }
+  .contact-card {
+    width: 100%;
+    padding: 28px 22px;
+    border-radius: 18px;
+  }
+  .contact-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 15px;
+    margin-bottom: 14px;
+  }
+  .contact-icon svg { width: 26px; height: 26px; }
+  .contact-card h3 { font-size: 1.05rem; margin-bottom: 4px; }
+  .contact-card p { font-size: .9rem; }
 
-  footer { padding: 32px 0 22px; }
-  .footer-logo .logo-img { height: 40px; }
-  footer .footer-logo { font-size: 1.1rem; margin-bottom: 10px; }
-  footer .footer-logo .mark { width: 28px; height: 28px; font-size: .85rem; }
-  footer p { font-size: .68rem; }
-  .social-icons { gap: 14px; margin-top: 14px; }
-  .social-icons svg { width: 18px; height: 18px; }
+  /* Footer */
+  footer { padding: 40px 0 26px; }
+  .footer-logo .logo-img { height: 48px; }
+  footer .footer-logo { font-size: 1.25rem; margin-bottom: 12px; }
+  footer .footer-logo .mark { width: 32px; height: 32px; font-size: .95rem; }
+  footer p { font-size: .82rem; }
+  .social-icons { gap: 18px; margin-top: 18px; }
+  .social-icons svg { width: 22px; height: 22px; }
 
-  .float-buttons { right: 12px; bottom: 12px; gap: 8px; }
-  .fab { width: 42px; height: 42px; }
-  .fab svg { width: 19px; height: 19px; }
+  /* Botões flutuantes */
+  .float-buttons { right: 14px; bottom: 14px; gap: 10px; }
+  .fab { width: 50px; height: 50px; }
+  .fab svg { width: 22px; height: 22px; }
 
-  #navMobile { padding: 84px 24px 30px; }
-  #navMobile a { padding: 13px 6px; font-size: .95rem; }
+  /* Menu mobile */
+  #navMobile { padding: 90px 26px 34px; }
+  #navMobile a { padding: 15px 8px; font-size: 1rem; }
 }
 
+/* ---------- Mobile pequeno (até 380px) ---------- */
 @media (max-width: 380px) {
-  .container { padding: 0 10px; }
-  .hero h1 { font-size: 1.4rem; }
-  .section-title { font-size: 1.1rem; }
-  .benefits-grid,
-  .testimonial-grid,
-  .portfolio-grid,
-  .contact-cards { gap: 5px; }
-  .benefit-card { padding: 11px 6px; }
-  .benefit-icon { width: 26px; height: 26px; font-size: .78rem; margin-bottom: 5px; }
-  .benefit-card h3 { font-size: .58rem; }
-  .benefit-card p { font-size: .46rem; }
-  .testimonial-card { padding: 12px 5px 10px; }
-  .testimonial-text { font-size: .46rem; }
-  .portfolio-info h4 { font-size: .55rem; }
-  .portfolio-info p { font-size: .42rem; }
-  .contact-card h3 { font-size: .56rem; }
-  .contact-card p { font-size: .42rem; }
-  .stat-num { font-size: .95rem; }
-  .stat-label { font-size: .5rem; }
-  .cta-box h2 { font-size: 1.45rem; }
-  .cta-box p { font-size: .78rem; }
-  .btn-cta { padding: 12px 24px; font-size: .85rem; }
+  .container { padding: 0 16px; }
+  .hero h1 { font-size: 1.7rem; }
+  .section-title { font-size: 1.4rem; }
+  .stat-num { font-size: 1.2rem; }
+  .stat-label { font-size: .66rem; }
+  .benefit-card h3 { font-size: 1.1rem; }
+  .cta-box h2 { font-size: 1.6rem; }
+  .cta-box p { font-size: .9rem; }
+  .counter-number { font-size: 2.6rem; }
 }
 </style>
 </head>
