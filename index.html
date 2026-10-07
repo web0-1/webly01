@@ -138,7 +138,8 @@ h1, h2, h3, h4 {
   background: var(--accent);
   margin: 18px auto 0;
   transform: scaleX(0);
-  transition: transform .9s cubic-bezier(.23, 1, .32, 1) .15s;
+  transform-origin: center;
+  transition: transform 1s cubic-bezier(.22, 1, .36, 1) .1s;
 }
 .reveal.visible .title-rule,
 .title-rule.reveal.visible { transform: scaleX(1); }
@@ -148,11 +149,28 @@ h1, h2, h3, h4 {
    ============================================================ */
 .reveal {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity .85s cubic-bezier(.23, 1, .32, 1),
-              transform .85s cubic-bezier(.23, 1, .32, 1);
+  transform: translateY(50px);
+  transition:
+    opacity 1s cubic-bezier(.22, 1, .36, 1),
+    transform 1s cubic-bezier(.22, 1, .36, 1);
+  will-change: opacity, transform;
 }
-.reveal.visible { opacity: 1; transform: none; }
+
+.reveal.reveal-left  { transform: translateX(-120px); }
+.reveal.reveal-right { transform: translateX(120px); }
+.reveal.reveal-scale { transform: scale(.86); }
+.reveal.reveal-zoom  { transform: scale(1.14); }
+
+.reveal.d1 { transition-delay: .15s; }
+.reveal.d2 { transition-delay: .30s; }
+.reveal.d3 { transition-delay: .45s; }
+.reveal.d4 { transition-delay: .60s; }
+.reveal.d5 { transition-delay: .75s; }
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateX(0) translateY(0) scale(1);
+}
 
 /* ============================================================
    PRELOADER
@@ -718,7 +736,7 @@ html[data-theme="light"] .hero-badge { color: var(--accent-d); }
 .graphics     { padding: 100px 0; background: var(--bg); }
 .portfolio    { padding: 100px 0; background: var(--bg-2); }
 .testimonials { padding: 100px 0; background: var(--bg); }
-.pricing      { padding: 100px 0; background: var(--bg-2); }
+.cta-final    { padding: 100px 0; background: var(--bg-2); }
 .contact      { padding: 100px 0; background: var(--bg); }
 
 /* ============================================================
@@ -838,7 +856,6 @@ html[data-theme="light"] .hero-badge { color: var(--accent-d); }
   font-weight: 500;
 }
 
-/* Barrinhas verticais subindo junto com a linha */
 .chart-bar {
   fill: url(#barGrad);
   opacity: 0;
@@ -871,7 +888,6 @@ html[data-theme="light"] .hero-badge { color: var(--accent-d); }
   100% { transform: scale(1); }
 }
 
-/* Linha de comparação (sem site) */
 .compare-line {
   stroke: var(--muted);
   stroke-width: 3;
@@ -898,7 +914,6 @@ html[data-theme="light"] .hero-badge { color: var(--accent-d); }
   animation: popIn .5s cubic-bezier(.23, 1, .32, 1) both;
 }
 
-/* Legenda do gráfico */
 .chart-legend {
   display: flex;
   justify-content: center;
@@ -1116,96 +1131,138 @@ html[data-theme="light"] .chart-footer { color: var(--accent-d); }
 }
 
 /* ============================================================
-   PREÇO
+   CTA FINAL — CRIE O SEU AGORA
    ============================================================ */
-.price-box {
+.cta-box {
   position: relative;
-  max-width: 540px;
+  max-width: 920px;
   margin: 0 auto;
-  padding: 52px 40px;
+  padding: 78px 44px;
   text-align: center;
-  background: var(--card);
-  border: 2px solid var(--border);
-  border-radius: 26px;
-  box-shadow: var(--shadow);
-  transition: transform .4s cubic-bezier(.23, 1, .32, 1),
-              border-color .4s ease,
-              box-shadow .4s ease;
+  background: linear-gradient(135deg, #16a34a 0%, #22c55e 50%, #4ade80 100%);
+  border-radius: 30px;
+  box-shadow: 0 30px 80px var(--glow);
+  overflow: hidden;
+  isolation: isolate;
 }
-.price-box:hover {
-  transform: translateY(-6px);
-  border-color: var(--accent);
-  box-shadow: var(--shadow-h);
-}
-.price-tag {
+.cta-box::before {
+  content: '';
   position: absolute;
-  top: -15px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 7px 20px;
-  background: var(--accent);
-  color: #fff;
-  border-radius: 100px;
-  font-family: 'Outfit', sans-serif;
-  font-weight: 800;
-  font-size: .7rem;
-  letter-spacing: .12em;
-  box-shadow: 0 8px 22px var(--glow);
-  white-space: nowrap;
+  inset: 0;
+  background: radial-gradient(circle at 25% 15%, rgba(255, 255, 255, .28), transparent 55%),
+              radial-gradient(circle at 80% 90%, rgba(255, 255, 255, .18), transparent 55%);
+  pointer-events: none;
+  z-index: -1;
 }
-.price-box h3 {
-  font-size: 1.4rem;
-  margin-top: 6px;
+.cta-box::after {
+  content: '';
+  position: absolute;
+  top: -60%;
+  left: -20%;
+  width: 60%;
+  height: 220%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .18), transparent);
+  transform: rotate(20deg);
+  animation: ctaShine 6s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
 }
-.price-value {
-  font-family: 'Outfit', sans-serif;
-  font-size: clamp(2.6rem, 8vw, 3.8rem);
+@keyframes ctaShine {
+  0%, 100% { left: -40%; }
+  50%      { left: 120%; }
+}
+
+.cta-emoji {
+  display: inline-block;
+  font-size: 3rem;
+  margin-bottom: 14px;
+  animation: ctaBounce 2.4s ease-in-out infinite;
+}
+@keyframes ctaBounce {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+.cta-box h2 {
+  font-size: clamp(2rem, 5.4vw, 3.4rem);
   font-weight: 900;
-  letter-spacing: -.045em;
-  color: var(--accent);
-  margin: 18px 0;
+  color: #fff;
+  line-height: 1.05;
+  margin-bottom: 16px;
+  letter-spacing: -.04em;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, .12);
 }
-.price-value small {
-  display: block;
-  margin-top: 4px;
-  font-size: .95rem;
+.cta-box h2 span {
+  position: relative;
+  display: inline-block;
+}
+.cta-box h2 span::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 6px;
+  background: rgba(255, 255, 255, .55);
+  border-radius: 6px;
+}
+
+.cta-box p {
+  color: rgba(255, 255, 255, .95);
+  font-size: 1.1rem;
+  max-width: 580px;
+  margin: 0 auto 36px;
   font-weight: 500;
-  color: var(--muted);
-  letter-spacing: 0;
 }
-.price-list {
-  list-style: none;
-  max-width: 340px;
-  margin: 26px auto;
-  text-align: left;
+
+.btn-cta {
+  background: #ffffff;
+  color: #0a1410;
+  padding: 19px 46px;
+  font-size: 1.1rem;
+  border-radius: 15px;
+  font-weight: 800;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, .22);
+  letter-spacing: .3px;
 }
-.price-list li {
+.btn-cta:hover {
+  background: #0a1410;
+  color: #fff;
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 22px 54px rgba(0, 0, 0, .32);
+}
+.btn-cta svg {
+  transition: transform .3s ease;
+}
+.btn-cta:hover svg {
+  transform: translateX(5px) rotate(-8deg);
+}
+
+.cta-trust {
   display: flex;
-  align-items: flex-start;
-  gap: 11px;
-  margin: 12px 0;
-  color: var(--text-2);
-  font-size: .93rem;
-  line-height: 1.45;
+  justify-content: center;
+  gap: 26px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+  color: rgba(255, 255, 255, .9);
+  font-size: .82rem;
+  font-weight: 600;
 }
-.price-list li::before {
+.cta-trust span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.cta-trust span::before {
   content: '✓';
-  flex-shrink: 0;
-  width: 21px;
-  height: 21px;
+  width: 18px;
+  height: 18px;
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: rgba(34, 197, 94, .15);
-  color: var(--accent);
+  background: rgba(255, 255, 255, .25);
+  font-size: .72rem;
   font-weight: 900;
-  font-size: .74rem;
-}
-.price-box .btn { width: 100%; }
-.footnote {
-  margin-top: 14px;
-  font-size: .78rem;
-  color: var(--muted);
 }
 
 /* ============================================================
@@ -1465,7 +1522,7 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
   .marquee-track span::after { width: 4px; height: 4px; }
 
   .benefits, .graphics, .portfolio,
-  .testimonials, .pricing, .contact { padding: 46px 0; }
+  .testimonials, .cta-final, .contact { padding: 46px 0; }
 
   .section-head { margin-bottom: 28px; }
   .section-title { font-size: 1.25rem; margin-bottom: 10px; }
@@ -1478,6 +1535,9 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
     grid-template-columns: repeat(3, 1fr);
     gap: 6px;
   }
+
+  .reveal.reveal-left  { transform: translateX(-60px); }
+  .reveal.reveal-right { transform: translateX(60px); }
 
   .benefit-card { padding: 14px 8px; border-radius: 11px; }
   .benefit-card::before { height: 2px; }
@@ -1531,21 +1591,37 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
   .visitor-counter p { font-size: .68rem; line-height: 1.4; }
   .counter-number { font-size: 1.9rem; }
 
-  .price-box { padding: 30px 14px; border-radius: 15px; }
-  .price-tag {
-    font-size: .55rem;
-    padding: 4px 12px;
-    letter-spacing: .08em;
-    top: -11px;
+  /* CTA final — mobile */
+  .cta-box {
+    padding: 42px 22px;
+    border-radius: 20px;
   }
-  .price-box h3 { font-size: .95rem; }
-  .price-value { font-size: 2rem; margin: 10px 0; }
-  .price-value small { font-size: .68rem; }
-  .price-list { margin: 14px auto; max-width: 100%; }
-  .price-list li { font-size: .7rem; margin: 7px 0; gap: 7px; line-height: 1.35; }
-  .price-list li::before { width: 15px; height: 15px; font-size: .55rem; }
-  .price-box .btn { padding: 11px 18px; font-size: .78rem; border-radius: 11px; }
-  .footnote { font-size: .6rem; margin-top: 10px; }
+  .cta-emoji { font-size: 2.2rem; margin-bottom: 8px; }
+  .cta-box h2 {
+    font-size: 1.7rem;
+    margin-bottom: 12px;
+  }
+  .cta-box h2 span::after { height: 4px; bottom: -4px; }
+  .cta-box p {
+    font-size: .85rem;
+    margin-bottom: 24px;
+    line-height: 1.55;
+  }
+  .btn-cta {
+    padding: 14px 30px;
+    font-size: .92rem;
+    border-radius: 12px;
+  }
+  .btn-cta svg { width: 14px; height: 14px; }
+  .cta-trust {
+    gap: 12px;
+    margin-top: 20px;
+    font-size: .62rem;
+  }
+  .cta-trust span::before {
+    width: 14px; height: 14px;
+    font-size: .55rem;
+  }
 
   .contact-cards {
     display: grid;
@@ -1595,6 +1671,9 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
   .contact-card p { font-size: .42rem; }
   .stat-num { font-size: .95rem; }
   .stat-label { font-size: .5rem; }
+  .cta-box h2 { font-size: 1.45rem; }
+  .cta-box p { font-size: .78rem; }
+  .btn-cta { padding: 12px 24px; font-size: .85rem; }
 }
 </style>
 </head>
@@ -1628,7 +1707,7 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
       <a href="#portfolio">Portfólio</a>
       <a href="#depoimentos">Depoimentos</a>
       <a href="#contato">Contato</a>
-      <a href="https://wa.me/5521987769422?text=Ol%C3%A1!%20Gostaria%20de%20um%20or%C3%A7amento%20para%20criar%20meu%20site." target="_blank" rel="noopener" class="nav-cta">Quero meu site</a>
+      <a href="https://wa.me/5521987769422?text=Ol%C3%A1!%20Gostaria%20de%20um%20or%C3%A7amento%20para%20criar%20meu%20site." target="_blank" rel="noopener" class="nav-cta">Crie o seu agora</a>
     </nav>
 
     <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="navMobile">
@@ -1645,7 +1724,7 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
   <a href="#portfolio">Portfólio</a>
   <a href="#depoimentos">Depoimentos</a>
   <a href="#contato">Contato</a>
-  <a href="https://wa.me/5521987769422?text=Ol%C3%A1!%20Gostaria%20de%20um%20or%C3%A7amento%20para%20criar%20meu%20site." target="_blank" rel="noopener" class="nav-cta">Quero meu site</a>
+  <a href="https://wa.me/5521987769422?text=Ol%C3%A1!%20Gostaria%20de%20um%20or%C3%A7amento%20para%20criar%20meu%20site." target="_blank" rel="noopener" class="nav-cta">Crie o seu agora</a>
 </nav>
 
 <main id="top">
@@ -1678,8 +1757,8 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
     <p>A Webly entrega sites modernos, ultrarrápidos e feitos para converter. Sem enrolação — direto ao resultado que o seu negócio precisa.</p>
 
     <div class="hero-buttons">
-      <a href="https://wa.me/5521987769422?text=Ol%C3%A1!%20Gostaria%20de%20um%20or%C3%A7amento%20para%20criar%20meu%20site." target="_blank" rel="noopener" class="btn btn-primary">
-        Quero meu site
+      <a href="https://wa.me/5521987769422?text=Ol%C3%A1!%20Quero%20criar%20meu%20site%20agora%20com%20a%20Webly." target="_blank" rel="noopener" class="btn btn-primary">
+        Crie o seu agora
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
       <a href="#beneficios" class="btn btn-secondary">Explorar</a>
@@ -1722,37 +1801,37 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
     </div>
 
     <div class="benefits-grid">
-      <article class="benefit-card reveal">
+      <article class="benefit-card reveal reveal-left d1">
         <div class="benefit-icon" aria-hidden="true">⚡</div>
         <h3>Velocidade extrema</h3>
         <p>Carregamento em menos de 2 segundos. Performance que impressiona o visitante e agrada o Google.</p>
       </article>
 
-      <article class="benefit-card reveal">
+      <article class="benefit-card reveal d2">
         <div class="benefit-icon" aria-hidden="true">📈</div>
         <h3>Foco em conversão</h3>
         <p>Cada elemento é pensado para guiar o visitante até a ação que você deseja: comprar, chamar ou pedir orçamento.</p>
       </article>
 
-      <article class="benefit-card reveal">
+      <article class="benefit-card reveal reveal-right d3">
         <div class="benefit-icon" aria-hidden="true">📱</div>
         <h3>Responsivo total</h3>
         <p>Perfeito em qualquer tela — celular, tablet ou computador — com a mesma qualidade visual.</p>
       </article>
 
-      <article class="benefit-card reveal">
+      <article class="benefit-card reveal reveal-left d1">
         <div class="benefit-icon" aria-hidden="true">🔍</div>
         <h3>Pronto para o Google</h3>
         <p>Estrutura otimizada para SEO desde o primeiro dia, ajudando seu site a aparecer nas pesquisas certas.</p>
       </article>
 
-      <article class="benefit-card reveal">
+      <article class="benefit-card reveal d2">
         <div class="benefit-icon" aria-hidden="true">🎨</div>
         <h3>Design sob medida</h3>
         <p>Nada de templates genéricos. O layout é construído com a identidade e os objetivos do seu negócio.</p>
       </article>
 
-      <article class="benefit-card reveal">
+      <article class="benefit-card reveal reveal-right d3">
         <div class="benefit-icon" aria-hidden="true">🤝</div>
         <h3>Suporte de verdade</h3>
         <p>Você fala direto com quem fez o seu site. Dúvidas, ajustes e orientações sempre à mão.</p>
@@ -1769,7 +1848,7 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
       <div class="title-rule"></div>
     </div>
 
-    <div class="chart-container reveal" id="lineChart">
+    <div class="chart-container reveal reveal-scale" id="lineChart">
       <div class="chart-title">Aumento de vendas após o site da Webly</div>
 
       <div class="chart-legend">
@@ -1800,27 +1879,22 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
 
           <polygon class="chart-area" points="50,250 180,220 310,180 440,120 570,60 570,250" />
 
-          <!-- Barrinhas verticais subindo junto com a linha -->
           <rect class="chart-bar" x="32"  y="246" width="36" height="4"   rx="6" />
           <rect class="chart-bar" x="162" y="220" width="36" height="30"  rx="6" />
           <rect class="chart-bar" x="292" y="180" width="36" height="70"  rx="6" />
           <rect class="chart-bar" x="422" y="120" width="36" height="130" rx="6" />
           <rect class="chart-bar" x="552" y="60"  width="36" height="190" rx="6" />
 
-          <!-- Linha de comparação (sem site) -->
           <polyline class="compare-line" points="50,250 180,246 310,242 440,239 570,236" />
 
-          <!-- Linha de crescimento (com site Webly) -->
           <polyline class="growth-line" points="50,250 180,220 310,180 440,120 570,60" />
 
-          <!-- Pontos da linha "sem site" -->
           <circle class="compare-pt" cx="50"  cy="250" r="4" />
           <circle class="compare-pt" cx="180" cy="246" r="4" />
           <circle class="compare-pt" cx="310" cy="242" r="4" />
           <circle class="compare-pt" cx="440" cy="239" r="4" />
           <circle class="compare-pt" cx="570" cy="236" r="4" />
 
-          <!-- Pontos da linha "com site" -->
           <circle class="dot-pt" cx="50"  cy="250" r="6" />
           <circle class="dot-pt" cx="180" cy="220" r="6" />
           <circle class="dot-pt" cx="310" cy="180" r="6" />
@@ -1857,7 +1931,7 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
 
     <div class="portfolio-grid">
       <!-- CARD 1 — Clínica -->
-      <article class="portfolio-card reveal"
+      <article class="portfolio-card reveal reveal-left d1"
                onclick="window.open('https://web0-1.github.io/Site-intermediario/#','_blank','noopener')"
                onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.open('https://web0-1.github.io/Site-intermediario/#','_blank','noopener');}"
                role="link" tabindex="0"
@@ -1873,7 +1947,7 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
       </article>
 
       <!-- CARD 2 — Escolinha de Surf -->
-      <article class="portfolio-card reveal"
+      <article class="portfolio-card reveal d2"
                onclick="window.open('https://web0-1.github.io/escola-surf/','_blank','noopener')"
                onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.open('https://web0-1.github.io/escola-surf/','_blank','noopener');}"
                role="link" tabindex="0"
@@ -1889,7 +1963,7 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
       </article>
 
       <!-- CARD 3 — Personal Trainer -->
-      <article class="portfolio-card reveal"
+      <article class="portfolio-card reveal reveal-right d3"
                onclick="window.open('https://web0-1.github.io/Mt-Odilon/','_blank','noopener')"
                onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.open('https://web0-1.github.io/Mt-Odilon/','_blank','noopener');}"
                role="link" tabindex="0"
@@ -1916,7 +1990,7 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
     </div>
 
     <div class="testimonial-grid">
-      <article class="testimonial-card reveal">
+      <article class="testimonial-card reveal reveal-left d1">
         <div class="stars" aria-label="5 de 5 estrelas">★★★★★</div>
         <p class="testimonial-text">Minhas vendas aumentaram 40% em 2 meses com o novo site da Webly. Atendimento impecável do início ao fim!</p>
         <div class="client">
@@ -1928,7 +2002,7 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
         </div>
       </article>
 
-      <article class="testimonial-card reveal">
+      <article class="testimonial-card reveal d2">
         <div class="stars" aria-label="5 de 5 estrelas">★★★★★</div>
         <p class="testimonial-text">Melhor investimento que fiz no meu negócio. O site converte muito mais do que o anterior e é rápido demais.</p>
         <div class="client">
@@ -1940,7 +2014,7 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
         </div>
       </article>
 
-      <article class="testimonial-card reveal">
+      <article class="testimonial-card reveal reveal-right d3">
         <div class="stars" aria-label="5 de 5 estrelas">★★★★★</div>
         <p class="testimonial-text">Entregaram antes do prazo e ainda me ensinaram como captar leads. Nota 1000, recomendo sem medo!</p>
         <div class="client">
@@ -1953,7 +2027,7 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
       </article>
     </div>
 
-    <div class="visitor-counter reveal">
+    <div class="visitor-counter reveal reveal-scale">
       <p>🌐 Já ajudamos mais de</p>
       <div class="counter-number" id="visitorCount" data-count="137">0</div>
       <p>clientes a venderem mais online</p>
@@ -1961,30 +2035,24 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
   </div>
 </section>
 
-<!-- ============ PREÇO ============ -->
-<section class="pricing" id="preco">
+<!-- ============ CTA FINAL — CRIE O SEU AGORA ============ -->
+<section class="cta-final" id="criar">
   <div class="container">
-    <div class="section-head reveal">
-      <h2 class="section-title">Um preço. <span>Sem surpresas.</span></h2>
-      <div class="title-rule"></div>
-    </div>
+    <div class="cta-box reveal reveal-scale">
+      <div class="cta-emoji" aria-hidden="true">🚀</div>
+      <h2>Crie o seu <span>agora</span></h2>
+      <p>Seu site profissional pronto em até 48 horas, feito sob medida para o seu negócio vender mais. Chama no WhatsApp e garante o seu.</p>
 
-    <div class="price-box reveal">
-      <div class="price-tag">★ MELHOR OFERTA</div>
-      <h3>Site profissional completo</h3>
-      <div class="price-value">A partir de R$290 <small>criação • 3x sem juros</small></div>
+      <a href="https://wa.me/5521987769422?text=Ol%C3%A1!%20Quero%20criar%20meu%20site%20agora%20com%20a%20Webly." target="_blank" rel="noopener" class="btn btn-cta">
+        Crie o seu agora
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
 
-      <ul class="price-list">
-        <li>Site profissional completo</li>
-        <li>Feito em até 48 horas</li>
-        <li>Otimizado para celular e computador</li>
-        <li>Aparece nas pesquisas do Google</li>
-        <li>Domínio grátis no 1º ano</li>
-        <li>Após o 1º ano, apenas R$40/ano</li>
-      </ul>
-
-      <a href="https://wa.me/5521987769422?text=Ol%C3%A1!%20Gostaria%20de%20garantir%20minha%20vaga%20na%20oferta%20da%20Webly." target="_blank" rel="noopener" class="btn btn-primary">Garantir minha vaga</a>
-      <p class="footnote">* Vagas limitadas por mês</p>
+      <div class="cta-trust">
+        <span>Entrega em até 48h</span>
+        <span>Suporte direto no WhatsApp</span>
+        <span>Sem enrolação</span>
+      </div>
     </div>
   </div>
 </section>
@@ -1999,7 +2067,7 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
     </div>
 
     <div class="contact-cards">
-      <a href="https://www.instagram.com/webly.site?igsh=NXl2ZzhsMjM4ZHdo" target="_blank" rel="noopener" class="contact-card reveal">
+      <a href="https://www.instagram.com/webly.site?igsh=NXl2ZzhsMjM4ZHdo" target="_blank" rel="noopener" class="contact-card reveal reveal-left d1">
         <div class="contact-icon">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.332.014 7.052.072 3.695.272 1.94 2.013 1.74 5.38.677 6.666.014 8.34.014 12c0 3.66.663 5.334 1.726 6.62.2 3.367 1.955 5.108 5.312 5.308 1.28.058 1.689.072 4.948.072s3.668-.014 4.948-.072c3.357-.2 5.112-1.941 5.312-5.308 1.063-1.286 1.726-2.96 1.726-6.62 0-3.66-.663-5.334-1.726-6.62C22.334 2.013 20.579.272 17.222.072 15.942.014 15.533 0 12.271 0H12zM12 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162S15.403 5.838 12 5.838zM12 16c-2.209 0-4-1.791-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.441s.645 1.441 1.441 1.441 1.441-.645 1.441-1.441-.645-1.441-1.441-1.441z"/></svg>
         </div>
@@ -2007,7 +2075,7 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
         <p>@webly.site</p>
       </a>
 
-      <a href="https://wa.me/5521987769422?text=Ol%C3%A1!%20Gostaria%20de%20um%20or%C3%A7amento%20para%20criar%20meu%20site." target="_blank" rel="noopener" class="contact-card reveal">
+      <a href="https://wa.me/5521987769422?text=Ol%C3%A1!%20Gostaria%20de%20um%20or%C3%A7amento%20para%20criar%20meu%20site." target="_blank" rel="noopener" class="contact-card reveal d2">
         <div class="contact-icon">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.032 2.018c-5.524 0-10 4.476-10 10 0 1.752.456 3.478 1.315 5.002L2 22l5.044-1.321c1.482.813 3.174 1.24 4.908 1.24 5.524 0 10-4.476 10-10s-4.476-10-10-10zm0 18.394c-1.513 0-3.008-.397-4.306-1.148l-.309-.183-2.994.784.799-2.916-.2-.323c-.85-1.39-1.298-2.99-1.298-4.634 0-4.827 3.928-8.755 8.756-8.755 4.828 0 8.756 3.928 8.756 8.756s-3.928 8.756-8.756 8.756zm4.8-6.559c-.264-.132-1.562-.771-1.804-.859-.242-.088-.418-.132-.594.132-.176.264-.682.859-.836 1.035-.154.176-.308.198-.572.066-.264-.132-1.115-.411-2.124-1.31-.785-.7-1.315-1.564-1.47-1.828-.154-.264-.016-.407.116-.538.118-.119.264-.308.396-.462.132-.154.176-.264.264-.44.088-.176.044-.33-.022-.462-.066-.132-.594-1.431-.814-1.96-.214-.514-.432-.445-.594-.454-.154-.009-.33-.011-.506-.011-.176 0-.462.066-.704.33-.242.264-.924.903-.924 2.203 0 1.3.946 2.556 1.078 2.732.132.176 1.862 2.844 4.512 3.988.63.272 1.122.435 1.507.557.633.2 1.209.171 1.664.104.508-.075 1.562-.639 1.782-1.256.22-.617.22-1.146.154-1.256-.066-.11-.242-.176-.506-.308z"/></svg>
         </div>
@@ -2015,7 +2083,7 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
         <p>(21) 98776-9422</p>
       </a>
 
-      <a href="#preco" class="contact-card reveal">
+      <a href="https://wa.me/5521987769422?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20a%20garantia%20de%20entrega." target="_blank" rel="noopener" class="contact-card reveal reveal-right d3">
         <div class="contact-icon">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 6v6c0 5.25 3.4 10.15 8 11.5 4.6-1.35 8-6.25 8-11.5V6l-8-4zm0 4.9 5 2.5V12c0 3.6-2.2 7.1-5 8.3-2.8-1.2-5-4.7-5-8.3V9.4l5-2.5z"/></svg>
         </div>
@@ -2063,7 +2131,7 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
     <svg id="themeIcon" viewBox="0 0 24 24" aria-hidden="true"></svg>
   </button>
 
-  <a href="https://wa.me/5521987769422?text=Ol%C3%A1!%20Gostaria%20de%20um%20or%C3%A7amento%20para%20criar%20meu%20site." target="_blank" rel="noopener" class="fab fab-whatsapp" aria-label="Falar no WhatsApp">
+  <a href="https://wa.me/5521987769422?text=Ol%C3%A1!%20Quero%20criar%20meu%20site%20agora%20com%20a%20Webly." target="_blank" rel="noopener" class="fab fab-whatsapp" aria-label="Falar no WhatsApp">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.032 2.018c-5.524 0-10 4.476-10 10 0 1.752.456 3.478 1.315 5.002L2 22l5.044-1.321c1.482.813 3.174 1.24 4.908 1.24 5.524 0 10-4.476 10-10s-4.476-10-10-10zm0 18.394c-1.513 0-3.008-.397-4.306-1.148l-.309-.183-2.994.784.799-2.916-.2-.323c-.85-1.39-1.298-2.99-1.298-4.634 0-4.827 3.928-8.755 8.756-8.755 4.828 0 8.756 3.928 8.756 8.756s-3.928 8.756-8.756 8.756zm4.8-6.559c-.264-.132-1.562-.771-1.804-.859-.242-.088-.418-.132-.594.132-.176.264-.682.859-.836 1.035-.154.176-.308.198-.572.066-.264-.132-1.115-.411-2.124-1.31-.785-.7-1.315-1.564-1.47-1.828-.154-.264-.016-.407.116-.538.118-.119.264-.308.396-.462.132-.154.176-.264.264-.44.088-.176.044-.33-.022-.462-.066-.132-.594-1.431-.814-1.96-.214-.514-.432-.445-.594-.454-.154-.009-.33-.011-.506-.011-.176 0-.462.066-.704.33-.242.264-.924.903-.924 2.203 0 1.3.946 2.556 1.078 2.732.132.176 1.862 2.844 4.512 3.988.63.272 1.122.435 1.507.557.633.2 1.209.171 1.664.104.508-.075 1.562-.639 1.782-1.256.22-.617.22-1.146.154-1.256-.066-.11-.242-.176-.506-.308z"/></svg>
   </a>
 </div>
@@ -2074,8 +2142,6 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
 
   var $  = function (s, c) { return (c || document).querySelector(s); };
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
-
-  var reduceMotion = false;
 
   /* ---------- Preloader ---------- */
   function hidePreloader() {
@@ -2193,7 +2259,7 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
           obs.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+    }, { threshold: 0.08, rootMargin: '0px 0px -100px 0px' });
     revealEls.forEach(function (el) { io.observe(el); });
   } else {
     revealEls.forEach(function (el) { el.classList.add('visible'); });
@@ -2242,12 +2308,10 @@ footer p { color: rgba(255, 255, 255, .6); font-size: .88rem; }
     function drawChart() {
       lineChart.classList.add('drawn');
 
-      /* Barrinhas crescem de baixo pra cima, sincronizadas com a linha */
       bars.forEach(function (b, i) {
         setTimeout(function () { b.classList.add('show'); }, 200 + i * 380);
       });
 
-      /* Pontinhos aparecem logo depois de cada barrinha */
       dots.forEach(function (d, i) {
         setTimeout(function () { d.classList.add('show'); }, 500 + i * 200);
       });
